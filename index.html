@@ -21,7 +21,7 @@
       <div class="hero-stat"><span>FTP de référence</span><strong id="heroFtp">206 <small>W</small></strong><span id="heroWkg">2,75 W/kg · 75 kg</span></div>
     </section>
     <nav class="tabs" aria-label="Navigation principale">
-      <button class="tab active" data-tab="planning">Planning</button><button class="tab" data-tab="progression">Progression</button><button class="tab" data-tab="profil">Mon profil</button>
+      <button class="tab active" data-tab="planning">Planning</button><button class="tab" data-tab="forme">Forme</button><button class="tab" data-tab="progression">Progression</button><button class="tab" data-tab="profil">Mon profil</button>
     </nav>
     <section id="planning" class="view active">
       <div class="section-heading"><div><p class="eyebrow">ORGANISATION</p><h2>Ma semaine</h2></div><div class="week-controls"><button id="prevWeek" class="icon-button" aria-label="Semaine précédente">‹</button><strong id="weekLabel"></strong><button id="nextWeek" class="icon-button" aria-label="Semaine suivante">›</button></div></div>
@@ -34,6 +34,20 @@
         <div class="checkin-grid"><label>Fatigue générale <output id="fatigueValue">3/10</output><input id="fatigue" type="range" min="1" max="10" value="3"></label><label>Qualité du sommeil <output id="sleepValue">3/5</output><input id="sleep" type="range" min="1" max="5" value="3"></label><label>Motivation <output id="moodValue">3/5</output><input id="mood" type="range" min="1" max="5" value="3"></label></div>
         <button id="saveCheckin" class="button button-secondary">Enregistrer mon état</button><span id="checkinSaved" class="saved-note" aria-live="polite"></span>
       </div>
+    </section>
+
+    <section id="forme" class="view">
+      <div class="section-heading"><div><p class="eyebrow">CHARGE ET RÉCUPÉRATION</p><h2>Ma forme</h2></div><span class="tag tag-muted">Estimation progressive</span></div>
+      <div class="form-intro"><strong>La forme se construit dans la durée.</strong><p>Cette page croise tes séances réellement renseignées et ton ressenti quotidien. Plus l'historique est complet, plus les tendances deviennent utiles.</p></div>
+      <div class="form-metrics">
+        <article class="form-metric"><span>Charge récente · 7 jours</span><strong id="acuteLoad">—</strong><small>minutes × RPE</small></article>
+        <article class="form-metric"><span>Base · 28 jours</span><strong id="baseLoad">—</strong><small>moyenne hebdomadaire</small></article>
+        <article class="form-metric"><span>Fatigue déclarée</span><strong id="currentFatigue">—</strong><small id="fatigueAdvice">À renseigner dans Planning</small></article>
+      </div>
+      <div class="panel"><div class="panel-title"><div><p class="eyebrow">TENDANCE DE CHARGE</p><h3>Charge récente et base</h3></div><span class="panel-icon">↗</span></div><div id="formChart" class="form-chart"></div><div class="chart-legend"><span><i class="legend-acute"></i> Charge 7 jours</span><span><i class="legend-base"></i> Base 28 jours</span></div><p id="historyMessage" class="muted">Les tendances apparaîtront au fil des séances renseignées.</p></div>
+      <div class="panel"><p class="eyebrow">ÉQUILIBRE</p><h3>Comment interpréter les indicateurs ?</h3><div class="form-status" id="formStatus"><span class="status-dot status-neutral"></span><div><strong>Historique en cours de constitution</strong><p>Renseigne la durée et le RPE après chaque séance, y compris la sortie club, le RPM et le BodyPump.</p></div></div><p class="muted">La charge affichée est une charge interne simplifiée (durée en minutes × ressenti RPE). Ce n'est ni le TSS Garmin ni une mesure médicale de fatigue.</p></div>
+      <div class="panel"><div class="panel-title"><div><p class="eyebrow">OBJECTIF SAISON</p><h3>Prochain pic de forme visé</h3></div><span class="panel-icon">⌁</span></div><div class="peak-card"><div><span>Échéance cible</span><strong>8 août 2027</strong><small>Étape du Tour de France Femmes</small></div><div class="peak-window"><span>Fenêtre d'affûtage à planifier</span><strong>Fin juillet – début août 2027</strong></div></div><p class="muted">Ce n'est pas une prédiction de forme actuelle : c'est une cible de planification. Le coach affinera la montée en charge et l'allègement à mesure que nous disposerons de tes sorties réelles, de ta récupération et de ton calendrier.</p></div>
+      <div class="panel"><p class="eyebrow">AJUSTEMENT DU COACH</p><h3>Les séances doivent suivre ta récupération</h3><p class="muted">Quand l'historique montrera une hausse inhabituelle de charge, ou si fatigue, sommeil et motivation se dégradent, le coach pourra alléger une séance intense plutôt que d'empiler les efforts. La sortie club du samedi reste fixe ; son intensité réelle devra être renseignée.</p><button id="adaptFromForm" class="button button-primary">Analyser ma semaine et adapter le planning →</button><p id="adaptMessage" class="saved-note" aria-live="polite"></p></div>
     </section>
     <section id="progression" class="view">
       <div class="section-heading"><div><p class="eyebrow">OBJECTIF 12 SEMAINES</p><h2>Ma progression</h2></div><span class="tag">Base de travail</span></div>
