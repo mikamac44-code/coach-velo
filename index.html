@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#101b2d">
+  <meta name="description" content="Coach Vélo — planning et suivi d'entraînement personnalisé.">
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" href="./icons/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+  <title>Coach Vélo</title>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="./" aria-label="Accueil Coach Vélo"><span class="brand-mark">CV</span><span>COACH <b>VÉLO</b></span></a>
+    <div class="top-actions"><span class="sync-state"><i></i> Données sur cet appareil</span><button id="installBtn" class="button button-quiet hidden">Installer</button></div>
+  </header>
+  <main class="shell">
+    <section class="hero">
+      <div><p class="eyebrow">TON ENTRAÎNEMENT, TON RYTHME</p><h1>Construisons ta<br><em>progression.</em></h1><p class="hero-copy">Un planning qui s'adapte à ta vie, pas l'inverse.</p></div>
+      <div class="hero-stat"><span>FTP de référence</span><strong id="heroFtp">206 <small>W</small></strong><span id="heroWkg">2,75 W/kg · 75 kg</span></div>
+    </section>
+    <nav class="tabs" aria-label="Navigation principale">
+      <button class="tab active" data-tab="planning">Planning</button><button class="tab" data-tab="progression">Progression</button><button class="tab" data-tab="profil">Mon profil</button>
+    </nav>
+    <section id="planning" class="view active">
+      <div class="section-heading"><div><p class="eyebrow">ORGANISATION</p><h2>Ma semaine</h2></div><div class="week-controls"><button id="prevWeek" class="icon-button" aria-label="Semaine précédente">‹</button><strong id="weekLabel"></strong><button id="nextWeek" class="icon-button" aria-label="Semaine suivante">›</button></div></div>
+      <div class="week-summary"><div><span>Vélo planifié</span><strong id="weekHours">—</strong></div><div><span>Séances</span><strong id="weekSessions">—</strong></div><div><span>Charge ressentie</span><strong id="weekLoad">À renseigner</strong></div></div>
+      <div id="weekGrid" class="week-grid"></div>
+      <div class="planning-actions"><button id="addUnavailable" class="button button-secondary">＋ Ajouter une indisponibilité</button><button id="replan" class="button button-primary">Réorganiser ma semaine <span>→</span></button></div>
+      <p class="hint">Le samedi matin est réservé à ta sortie club (2 à 3 h). Le coach ne la déplace jamais et tient compte de son intensité pour ajuster les autres séances.</p>
+      <div class="panel">
+        <div class="panel-title"><div><p class="eyebrow">RETOUR DE SÉANCE</p><h3>Comment te sens-tu ?</h3></div><span class="panel-icon">♥</span></div>
+        <div class="checkin-grid"><label>Fatigue générale <output id="fatigueValue">3/10</output><input id="fatigue" type="range" min="1" max="10" value="3"></label><label>Qualité du sommeil <output id="sleepValue">3/5</output><input id="sleep" type="range" min="1" max="5" value="3"></label><label>Motivation <output id="moodValue">3/5</output><input id="mood" type="range" min="1" max="5" value="3"></label></div>
+        <button id="saveCheckin" class="button button-secondary">Enregistrer mon état</button><span id="checkinSaved" class="saved-note" aria-live="polite"></span>
+      </div>
+    </section>
+    <section id="progression" class="view">
+      <div class="section-heading"><div><p class="eyebrow">OBJECTIF 12 SEMAINES</p><h2>Ma progression</h2></div><span class="tag">Base de travail</span></div>
+      <div class="goal-card"><div><p class="eyebrow">OBJECTIF PRINCIPAL</p><h3>Tenir le groupe 1</h3><p>Gagner en endurance, en capacité à répéter les efforts et en résistance aux changements de rythme sur une sortie d'environ 90 km.</p></div><div class="goal-number">12<small>semaines</small></div></div>
+      <div class="panel"><h3>Les grandes étapes</h3><div class="phases" id="phases"></div></div>
+      <div class="panel"><h3>Zones de puissance indicatives</h3><p class="muted">Calculées à partir de ta FTP déclarée de <b id="zoneFtp">206 W</b>. Elle reste à confirmer avec tes données réelles.</p><div id="zones" class="zones"></div></div>
+      <div class="panel"><h3>Repères à suivre</h3><ul class="plain-list"><li>La capacité à rester dans les roues après les relances.</li><li>La répétabilité des efforts, pas seulement un pic de puissance.</li><li>La récupération dans les 24 à 48 h après les séances dures.</li><li>La régularité sur plusieurs semaines.</li></ul></div>
+    </section>
+    <section id="profil" class="view">
+      <div class="section-heading"><div><p class="eyebrow">PARAMÈTRES PERSONNELS</p><h2>Mon profil</h2></div></div>
+      <div class="panel profile-form">
+        <label>FTP actuelle (watts)<input id="ftpInput" type="number" min="80" max="500" value="206"></label>
+        <label>Poids (kg)<input id="weightInput" type="number" min="35" max="200" step=".1" value="75"></label>
+        <label>RPM habituellement le <select id="rpmDay"><option value="0">Lundi</option><option value="1">Mardi</option><option value="2">Mercredi</option><option value="3" selected>Jeudi</option><option value="4">Vendredi</option><option value="5">Samedi</option><option value="6">Dimanche</option><option value="none">Pas de RPM fixe</option></select></label>
+        <label>BodyPump habituellement le <select id="pumpDay"><option value="0">Lundi</option><option value="1">Mardi</option><option value="2" selected>Mercredi</option><option value="3">Jeudi</option><option value="4">Vendredi</option><option value="5">Samedi</option><option value="6">Dimanche</option><option value="none">Pas de BodyPump fixe</option></select></label>
+        <button id="saveProfile" class="button button-primary">Enregistrer mon profil</button><span id="profileSaved" class="saved-note"></span>
+      </div>
+      <div class="panel"><h3>Mes données</h3><p class="muted">Tes réglages, indisponibilités et retours de fatigue restent dans le stockage local de ce navigateur. Ils ne sont pas envoyés sur un serveur.</p><div class="data-actions"><button id="exportData" class="button button-secondary">Exporter mes données</button><label class="button button-secondary file-label">Importer une sauvegarde<input id="importData" type="file" accept="application/json"></label><button id="resetData" class="button button-danger">Réinitialiser l'application</button></div></div>
+      <div class="panel"><h3>Connexion Garmin</h3><p class="muted">La connexion automatique Garmin n'est pas activée dans cette version. La prochaine étape sera l'import sécurisé de fichiers d'activité FIT exportés depuis Garmin Connect, puis l'analyse de puissance, fréquence cardiaque et charge d'entraînement.</p><span class="tag tag-muted">À développer — pas encore connecté</span></div>
+    </section>
+    <footer>COACH VÉLO <span>Version 0.1 · Prototype évolutif</span></footer>
+  </main>
+  <dialog id="unavailableDialog"><form method="dialog" id="unavailableForm"><div class="dialog-head"><div><p class="eyebrow">CALENDRIER</p><h3>Ajouter une indisponibilité</h3></div><button class="icon-button" value="cancel" aria-label="Fermer">×</button></div><label>Date concernée<input id="unavailableDate" type="date" required></label><label>Motif (facultatif)<input id="unavailableReason" type="text" placeholder="Déplacement professionnel…"></label><div class="dialog-actions"><button class="button button-secondary" value="cancel">Annuler</button><button id="confirmUnavailable" class="button button-primary" value="default">Enregistrer</button></div></form></dialog>
+  <dialog id="sessionDialog"><form method="dialog" id="sessionForm"><div class="dialog-head"><div><p class="eyebrow">DÉTAIL DE LA SÉANCE</p><h3 id="sessionTitle">Séance</h3></div><button class="icon-button" value="cancel" aria-label="Fermer">×</button></div><p id="sessionDescription" class="muted"></p><label>Durée réelle (minutes)<input id="actualDuration" type="number" min="0" max="600"></label><label>Ressenti de l'effort (RPE /10)<input id="sessionRpe" type="number" min="1" max="10" value="5"></label><div class="dialog-actions"><button class="button button-secondary" value="cancel">Fermer</button><button id="saveSession" class="button button-primary" value="default">Enregistrer le retour</button></div></form></dialog>
+  <script src="./app.js"></script>
+</body>
+</html>
